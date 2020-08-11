@@ -1,17 +1,17 @@
 //react app dependencies
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter  } from 'react-router-dom';
+import { StaticRouter  } from 'react-router-dom/server';
 import { Provider } from 'react-redux';
-import Routes from '../client/route';
+import Routes from '../common/route';
 
 export  default  (req, store) => {
     const content = renderToString(
-        <StaticRouter  location={req.path} context={{}}>
-            <Provider  store={store}>
-                <Routes />
-            </Provider>
-        </StaticRouter>
+    <Provider  store={store}>
+            <StaticRouter  location={req.path} context={{}}>
+                  <Routes />
+            </StaticRouter>
+    </Provider>
     );
     return   `
     <html>

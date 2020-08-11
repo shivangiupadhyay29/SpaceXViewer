@@ -60,78 +60,29 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("redux");
+module.exports = require("react");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("redux-saga/effects");
+module.exports = require("redux");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = require("redux-saga/effects");
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-router-dom");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-redux");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(3);
-
-var _App = __webpack_require__(17);
-
-var _App2 = _interopRequireDefault(_App);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', element: _react2.default.createElement(_App2.default, null) })
-    );
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = require("redux-saga");
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -146,7 +97,432 @@ exports.default = {
 };
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(5);
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-polyfill");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _staticApp = __webpack_require__(7);
+
+var _staticApp2 = _interopRequireDefault(_staticApp);
+
+var _store = __webpack_require__(19);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var express = __webpack_require__(29);
+var app = express();
+
+app.use(express.static('public')); //bundle.js file is 
+// looked into this folder exposed by the server to webpack
+//to be sent to the browser. 
+
+app.get('*', function (req, res) {
+    res.send((0, _staticApp2.default)(req, _store2.default));
+});
+
+app.listen(3030, function () {
+    return console.log('server is listening on 3030..');
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _server = __webpack_require__(8);
+
+var _server2 = __webpack_require__(9);
+
+var _reactRedux = __webpack_require__(10);
+
+var _route = __webpack_require__(11);
+
+var _route2 = _interopRequireDefault(_route);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (req, store) {
+    var content = (0, _server.renderToString)(_react2.default.createElement(
+        _reactRedux.Provider,
+        { store: store },
+        _react2.default.createElement(
+            _server2.StaticRouter,
+            { location: req.path, context: {} },
+            _react2.default.createElement(_route2.default, null)
+        )
+    ));
+    return '\n    <html>\n    <head></head>\n    <body>\n        <div id=\'root\'>' + content + '</div>\n        <script src="bundle.js"></script>\n    </body>\n    </html>\n    ';
+}; //react app dependencies
+
+/***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom/server");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-redux");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(12);
+
+var _containers = __webpack_require__(13);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/', element: _react2.default.createElement(_containers.Home, null) })
+    );
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _home = __webpack_require__(14);
+
+Object.defineProperty(exports, 'Home', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_home).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(15);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _constants = __webpack_require__(16);
+
+var _header = __webpack_require__(18);
+
+var _header2 = _interopRequireDefault(_header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Home = function Home(props) {
+  var title = props.title;
+
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_header2.default, { title: title })
+  );
+};
+Home.propTypes = {
+  title: _propTypes2.default.string.isRequired
+};
+
+Home.defaultProps = {
+  title: _constants.headerTitle
+};
+
+exports.default = Home;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _lang = __webpack_require__(17);
+
+Object.keys(_lang).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _lang[key];
+    }
+  });
+});
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var headerTitle = exports.headerTitle = 'SpaceX Launch Programs';
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (props) {
+  return _react2.default.createElement(
+    'h1',
+    null,
+    props.title
+  );
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+      value: true
+});
+
+var _redux = __webpack_require__(1);
+
+var _reduxSaga = __webpack_require__(20);
+
+var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
+
+var _rootSaga = __webpack_require__(21);
+
+var _rootSaga2 = _interopRequireDefault(_rootSaga);
+
+var _rootReducer = __webpack_require__(26);
+
+var _rootReducer2 = _interopRequireDefault(_rootReducer);
+
+__webpack_require__(28);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sagaMiddleware = (0, _reduxSaga2.default)();
+
+var createAppStore = function createAppStore() {
+      var Store = (0, _redux.createStore)(_rootReducer2.default, (0, _redux.applyMiddleware)(sagaMiddleware));
+      // use the same saga middleware that you have enhanced your store with
+      sagaMiddleware.run(_rootSaga2.default);
+      return Store;
+};
+
+exports.default = createAppStore();
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-saga");
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+exports.default = rootSaga;
+
+var _effects = __webpack_require__(2);
+
+var _space = __webpack_require__(22);
+
+var _marked = /*#__PURE__*/regeneratorRuntime.mark(rootSaga);
+
+function rootSaga() {
+   return regeneratorRuntime.wrap(function rootSaga$(_context) {
+      while (1) {
+         switch (_context.prev = _context.next) {
+            case 0:
+               _context.next = 2;
+               return (0, _effects.all)([(0, _space.listWatcher)()]);
+
+            case 2:
+            case 'end':
+               return _context.stop();
+         }
+      }
+   }, _marked, this);
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.listWatcher = listWatcher;
+
+var _space = __webpack_require__(3);
+
+var _space2 = _interopRequireDefault(_space);
+
+var _constant = __webpack_require__(23);
+
+var _api = __webpack_require__(24);
+
+var _effects = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _marked = /*#__PURE__*/regeneratorRuntime.mark(fetchSpaceXList),
+    _marked2 = /*#__PURE__*/regeneratorRuntime.mark(listWatcher);
+
+function fetchSpaceXList(action) {
+    var _action$params, params, _params$offset, offset, limit, url, json;
+
+    return regeneratorRuntime.wrap(function fetchSpaceXList$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _action$params = action.params, params = _action$params === undefined ? null : _action$params;
+                    _params$offset = params.offset, offset = _params$offset === undefined ? 0 : _params$offset, limit = params.limit;
+                    url = _constant.baseApiURL + (params ? '?' : '');
+                    _context.next = 5;
+                    return (0, _api.api)(url, _constant.type.GET, params).then(function (response) {
+                        return response;
+                    });
+
+                case 5:
+                    json = _context.sent;
+                    _context.next = 8;
+                    return (0, _effects.put)({ type: _space2.default.SPACEX_LIST_RECEIVED, json: json });
+
+                case 8:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, _marked, this);
+}
+
+function listWatcher(params) {
+    return regeneratorRuntime.wrap(function listWatcher$(_context2) {
+        while (1) {
+            switch (_context2.prev = _context2.next) {
+                case 0:
+                    _context2.next = 2;
+                    return (0, _effects.takeLatest)(_space2.default.GET_SPACEX_LIST, fetchSpaceXList);
+
+                case 2:
+                case 'end':
+                    return _context2.stop();
+            }
+        }
+    }, _marked2, this);
+}
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -159,21 +535,8 @@ var baseApiURL = exports.baseApiURL = "https://api.spaceXdata.com/v3/launches?li
 
 var type = exports.type = { GET: 'GET', POST: 'POST', PUT: 'PUT', DELETE: 'DELETE' };
 
-// export  const articlesURL = (isFeed) => `/api/articles${!isFeed?'':'/feed'}`; 
-// export const loginURL = "/api/users/login";
-// export const registerURL = '/api/users';
-// export const userURL = '/api/user';
-// export const profileURL = '/api/profiles/';
-// export const createArticleURL = '/api/articles';
-// export const missionsURL = () =>  `/api/articles/${slug}`;
-// export const commentUrl = (slug) => `/api/articles/${slug}/comments`;
-// export const commentDeleteUrl = ({articleSlug, id }) => `/api/articles/${articleSlug}/comments/${id}`;
-// export const favoriteArticleUrl = (articleSlug) =>`/api/articles/${articleSlug}/favorite`;
-// export const followingAuthorUrl = (username) => `/api/profiles/${username}/follow`;
-// export const tagsUrl = `/api/tags`;
-
 /***/ }),
-/* 9 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -225,7 +588,7 @@ var api = exports.api = function () {
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 // import {  setJwtHeaders } from '../utils';
-var fetch = __webpack_require__(21);
+var fetch = __webpack_require__(25);
 
 var generateHeader = function generateHeader() {
   var headerObject = setJwtHeaders({
@@ -269,450 +632,10 @@ var responseLogger = function responseLogger(response) {
 };
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = require("regenerator-runtime/runtime");
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    GET_SPACEX_LIST: 'GET_SPACEX_LIST',
-    SPACEX_LIST_RECEIVED: 'SPACEX_LIST_RECEIVED'
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(13);
-module.exports = __webpack_require__(14);
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-polyfill");
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _staticApp = __webpack_require__(15);
-
-var _staticApp2 = _interopRequireDefault(_staticApp);
-
-var _store = __webpack_require__(24);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var express = __webpack_require__(29);
-var app = express();
-
-app.use(express.static('public')); //bundle.js file is 
-// looked into this folder exposed by the server to webpack
-//to be sent to the browser. 
-
-app.get('*', function (req, res) {
-    console.log('AppStore', _store2.default);
-    res.send((0, _staticApp2.default)(req, _store2.default));
-});
-
-app.listen(3030, function () {
-    return console.log('server is listening on 3030..');
-});
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _server = __webpack_require__(16);
-
-var _reactRouterDom = __webpack_require__(3);
-
-var _reactRedux = __webpack_require__(4);
-
-var _route = __webpack_require__(5);
-
-var _route2 = _interopRequireDefault(_route);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (req, store) {
-    var content = (0, _server.renderToString)(_react2.default.createElement(
-        _reactRouterDom.StaticRouter,
-        { location: req.path, context: {} },
-        _react2.default.createElement(
-            _reactRedux.Provider,
-            { store: store },
-            _react2.default.createElement(_route2.default, null)
-        )
-    ));
-    return '\n    <html>\n    <head></head>\n    <body>\n        <div id=\'root\'>' + content + '</div>\n        <script src="bundle.js"></script>\n    </body>\n    </html>\n    ';
-}; //react app dependencies
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-dom/server");
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-       value: true
-});
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(3);
-
-var _reactRedux = __webpack_require__(4);
-
-var _store = __webpack_require__(18);
-
-var _store2 = _interopRequireDefault(_store);
-
-var _route = __webpack_require__(5);
-
-var _route2 = _interopRequireDefault(_route);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//supporting libraries
-var App = function App() {
-       return _react2.default.createElement(
-              _reactRouterDom.BrowserRouter,
-              { baseUrl: '/' },
-              _react2.default.createElement(
-                     _reactRedux.Provider,
-                     { store: _store2.default },
-                     _react2.default.createElement(_route2.default, null)
-              )
-       );
-};
-
-exports.default = App;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-      value: true
-});
-
-var _redux = __webpack_require__(0);
-
-var _reduxSaga = __webpack_require__(6);
-
-var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
-
-var _rootSaga = __webpack_require__(19);
-
-var _rootSaga2 = _interopRequireDefault(_rootSaga);
-
-var _rootReducer = __webpack_require__(22);
-
-var _rootReducer2 = _interopRequireDefault(_rootReducer);
-
-__webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var sagaMiddleware = (0, _reduxSaga2.default)();
-
-var createAppStore = function createAppStore() {
-      var Store = (0, _redux.createStore)(_rootReducer2.default, (0, _redux.applyMiddleware)(sagaMiddleware));
-      // use the same saga middleware that you have enhanced your store with
-      sagaMiddleware.run(_rootSaga2.default);
-      return Store;
-};
-
-exports.default = createAppStore();
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-exports.default = rootSaga;
-
-var _effects = __webpack_require__(1);
-
-var _space = __webpack_require__(20);
-
-var _marked = /*#__PURE__*/regeneratorRuntime.mark(rootSaga);
-
-function rootSaga() {
-   return regeneratorRuntime.wrap(function rootSaga$(_context) {
-      while (1) {
-         switch (_context.prev = _context.next) {
-            case 0:
-               _context.next = 2;
-               return (0, _effects.all)([(0, _space.listWatcher)()]);
-
-            case 2:
-            case 'end':
-               return _context.stop();
-         }
-      }
-   }, _marked, this);
-}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.listWatcher = listWatcher;
-
-var _space = __webpack_require__(7);
-
-var _space2 = _interopRequireDefault(_space);
-
-var _constant = __webpack_require__(8);
-
-var _api = __webpack_require__(9);
-
-var _effects = __webpack_require__(1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _marked = /*#__PURE__*/regeneratorRuntime.mark(fetchSpaceXList),
-    _marked2 = /*#__PURE__*/regeneratorRuntime.mark(listWatcher);
-
-function fetchSpaceXList(action) {
-    var _action$params, params, _params$offset, offset, limit, url, json;
-
-    return regeneratorRuntime.wrap(function fetchSpaceXList$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _action$params = action.params, params = _action$params === undefined ? null : _action$params;
-                    _params$offset = params.offset, offset = _params$offset === undefined ? 0 : _params$offset, limit = params.limit;
-                    url = _constant.baseApiURL + (params ? '?' : '');
-                    _context.next = 5;
-                    return (0, _api.api)(url, _constant.type.GET, params).then(function (response) {
-                        return response;
-                    });
-
-                case 5:
-                    json = _context.sent;
-                    _context.next = 8;
-                    return (0, _effects.put)({ type: _space2.default.SPACEX_LIST_RECEIVED, json: json });
-
-                case 8:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _marked, this);
-}
-
-function listWatcher(params) {
-    return regeneratorRuntime.wrap(function listWatcher$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.next = 2;
-                    return (0, _effects.takeLatest)(_space2.default.GET_SPACEX_LIST, fetchSpaceXList);
-
-                case 2:
-                case 'end':
-                    return _context2.stop();
-            }
-        }
-    }, _marked2, this);
-}
-
-/***/ }),
-/* 21 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("node-fetch");
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _redux = __webpack_require__(0);
-
-var _space = __webpack_require__(23);
-
-var _space2 = _interopRequireDefault(_space);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = (0, _redux.combineReducers)({
-    spaceMissions: _space2.default
-});
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _space = __webpack_require__(7);
-
-var _space2 = _interopRequireDefault(_space);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var initState = {
-    missions: [],
-    loading: false
-};
-
-var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initState;
-    var action = arguments[1];
-
-    switch (action.type) {
-        case _space2.default.GET_SPACEX_LIST:
-            return _extends({}, state, { loading: true });
-        case _space2.default.SPACEX_LIST_RECEIVED:
-            return _extends({}, state, { missions: action.json, loading: false });
-        default:
-            return _extends({}, state);
-    }
-};
-
-exports.default = reducer;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-      value: true
-});
-
-var _redux = __webpack_require__(0);
-
-var _reduxSaga = __webpack_require__(6);
-
-var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
-
-var _rootSaga = __webpack_require__(25);
-
-var _rootSaga2 = _interopRequireDefault(_rootSaga);
-
-var _rootReducer = __webpack_require__(27);
-
-var _rootReducer2 = _interopRequireDefault(_rootReducer);
-
-__webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var sagaMiddleware = (0, _reduxSaga2.default)();
-
-var createAppStore = function createAppStore() {
-      var Store = (0, _redux.createStore)(_rootReducer2.default, (0, _redux.applyMiddleware)(sagaMiddleware));
-      // use the same saga middleware that you have enhanced your store with
-      sagaMiddleware.run(_rootSaga2.default);
-      return Store;
-};
-
-exports.default = createAppStore();
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-exports.default = rootSaga;
-
-var _effects = __webpack_require__(1);
-
-var _space = __webpack_require__(26);
-
-var _marked = /*#__PURE__*/regeneratorRuntime.mark(rootSaga);
-
-function rootSaga() {
-   return regeneratorRuntime.wrap(function rootSaga$(_context) {
-      while (1) {
-         switch (_context.prev = _context.next) {
-            case 0:
-               _context.next = 2;
-               return (0, _effects.all)([(0, _space.listWatcher)()]);
-
-            case 2:
-            case 'end':
-               return _context.stop();
-         }
-      }
-   }, _marked, this);
-}
 
 /***/ }),
 /* 26 */
@@ -724,66 +647,18 @@ function rootSaga() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.listWatcher = listWatcher;
 
-var _space = __webpack_require__(11);
+var _redux = __webpack_require__(1);
+
+var _space = __webpack_require__(27);
 
 var _space2 = _interopRequireDefault(_space);
 
-var _constant = __webpack_require__(8);
-
-var _api = __webpack_require__(9);
-
-var _effects = __webpack_require__(1);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = /*#__PURE__*/regeneratorRuntime.mark(fetchSpaceXList),
-    _marked2 = /*#__PURE__*/regeneratorRuntime.mark(listWatcher);
-
-function fetchSpaceXList(action) {
-    var _action$params, params, _params$offset, offset, limit, url, json;
-
-    return regeneratorRuntime.wrap(function fetchSpaceXList$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _action$params = action.params, params = _action$params === undefined ? null : _action$params;
-                    _params$offset = params.offset, offset = _params$offset === undefined ? 0 : _params$offset, limit = params.limit;
-                    url = _constant.baseApiURL + (params ? '?' : '');
-                    _context.next = 5;
-                    return (0, _api.api)(url, _constant.type.GET, params).then(function (response) {
-                        return response;
-                    });
-
-                case 5:
-                    json = _context.sent;
-                    _context.next = 8;
-                    return (0, _effects.put)({ type: _space2.default.SPACEX_LIST_RECEIVED, json: json });
-
-                case 8:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _marked, this);
-}
-
-function listWatcher(params) {
-    return regeneratorRuntime.wrap(function listWatcher$(_context2) {
-        while (1) {
-            switch (_context2.prev = _context2.next) {
-                case 0:
-                    _context2.next = 2;
-                    return (0, _effects.takeLatest)(_space2.default.GET_SPACEX_LIST, fetchSpaceXList);
-
-                case 2:
-                case 'end':
-                    return _context2.stop();
-            }
-        }
-    }, _marked2, this);
-}
+exports.default = (0, _redux.combineReducers)({
+    spaceMissions: _space2.default
+});
 
 /***/ }),
 /* 27 */
@@ -796,32 +671,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _redux = __webpack_require__(0);
-
-var _space = __webpack_require__(28);
-
-var _space2 = _interopRequireDefault(_space);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = (0, _redux.combineReducers)({
-    spaceMissions: _space2.default
-});
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _space = __webpack_require__(11);
+var _space = __webpack_require__(3);
 
 var _space2 = _interopRequireDefault(_space);
 
@@ -847,6 +699,12 @@ var reducer = function reducer() {
 };
 
 exports.default = reducer;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = require("regenerator-runtime/runtime");
 
 /***/ }),
 /* 29 */

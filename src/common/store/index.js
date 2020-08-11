@@ -10,7 +10,7 @@ const createAppStore = () => {
       const Store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
      // use the same saga middleware that you have enhanced your store with
      sagaMiddleware.run(rootSaga);
-      return Store;
+     return Store;
 }
 
 export default createAppStore();
