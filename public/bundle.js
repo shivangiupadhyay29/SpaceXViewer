@@ -46727,7 +46727,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = __webpack_require__(24);
@@ -46744,24 +46744,34 @@ var _header = __webpack_require__(424);
 
 var _header2 = _interopRequireDefault(_header);
 
+var _filters = __webpack_require__(425);
+
+var _filters2 = _interopRequireDefault(_filters);
+
+var _spaceList = __webpack_require__(426);
+
+var _spaceList2 = _interopRequireDefault(_spaceList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Home = function Home(props) {
-  var title = props.title;
+    var title = props.title;
 
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(_header2.default, { title: title })
-  );
+    return _react2.default.createElement(
+        'div',
+        { className: 'home-container' },
+        _react2.default.createElement(_header2.default, { title: title }),
+        _react2.default.createElement(_filters2.default, null),
+        _react2.default.createElement(_spaceList2.default, null)
+    );
 };
 Home.propTypes = {
-  title: _propTypes2.default.string.isRequired
+    title: _propTypes2.default.string.isRequired
 };
 
 Home.defaultProps = {
-  title: _constants.headerTitle
+    title: _constants.headerTitle
 };
 
 exports.default = Home;
@@ -46825,6 +46835,83 @@ exports.default = function (props) {
     props.title
   );
 };
+
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(24);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(56);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Filters = function Filters(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'h2',
+            null,
+            'filters..!!'
+        )
+    );
+};
+Filters.propTypes = {};
+
+Filters.defaultProps = {};
+
+exports.default = Filters;
+
+/***/ }),
+/* 426 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(24);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(56);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SpaceList = function SpaceList(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'h2',
+            null,
+            'listing..!!'
+        )
+    );
+};
+
+SpaceList.propTypes = {};
+
+SpaceList.defaultProps = {};
+
+exports.default = SpaceList;
 
 /***/ })
 /******/ ]);
